@@ -64,6 +64,12 @@ jobs:
       - name: Verificar containers em execução
         run: docker ps -a
 
+      - name: Verificar logs do container
+        run: docker logs cicd-container
+
+#
+#
+
 #  build-and-test:
 #    runs-on: ubuntu-latest
 #
