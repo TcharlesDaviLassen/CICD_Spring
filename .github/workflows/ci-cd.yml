@@ -67,6 +67,11 @@ jobs:
       - name: Verificar logs do container
         run: docker logs cicd-container
 
+      - name: Testar aplicação rodando no container
+        run: |
+          sleep 5
+          curl -I http://localhost:8080
+
 #
 #
 
