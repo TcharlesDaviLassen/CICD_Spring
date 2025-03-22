@@ -55,11 +55,14 @@ jobs:
 
       - name: Construir imagem Docker
         run: |
-          docker build -t meu-app:${{ github.sha }} .
+          docker build -t cicd:${{ github.sha }} .
 
       - name: Rodar container Docker
         run: |
-          docker run -d -p 8080:8080 --name meu-app-container meu-app:${{ github.sha }}
+          docker run -d -p 8080:8080 --name cicd-container cicd:${{ github.sha }}
+
+      - name: Verificar containers em execução
+        run: docker ps -a
 
 #  build-and-test:
 #    runs-on: ubuntu-latest
