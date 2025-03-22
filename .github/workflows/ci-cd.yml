@@ -53,6 +53,14 @@ jobs:
       - name: Verificar arquivos baixados
         run: ls -l target/
 
+      - name: Construir imagem Docker
+        run: |
+          docker build -t meu-app:${{ github.sha }} .
+
+      - name: Rodar container Docker
+        run: |
+          docker run -d -p 8080:8080 --name meu-app-container meu-app:${{ github.sha }}
+
 #  build-and-test:
 #    runs-on: ubuntu-latest
 #
