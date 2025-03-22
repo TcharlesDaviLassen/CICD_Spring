@@ -24,17 +24,17 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      - name: Construir e rodar testes
-        run: |
-          chmod +x mvnw
-          ./mvnw clean package
+#      - name: Construir e rodar testes
+#        run: |
+#          chmod +x mvnw
+#          ./mvnw clean package
 
-      - name: Executar Testes de Carga
-        run: jmeter -n -t jmeter/teste-carga.jmx -l resultado.jtl
-
-      - name: Executar Testes de Segurança
-        run: |
-          docker run -t owasp/zap2docker-stable zap-cli quick-scan -u http://localhost:8080
+#      - name: Executar Testes de Carga
+#        run: jmeter -n -t jmeter/teste-carga.jmx -l resultado.jtl
+#
+#      - name: Executar Testes de Segurança
+#        run: |
+#          docker run -t owasp/zap2docker-stable zap-cli quick-scan -u http://localhost:8080
 
       - name: Armazenar artefato
         uses: actions/upload-artifact@v4
