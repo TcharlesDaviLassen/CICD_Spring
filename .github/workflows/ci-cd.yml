@@ -70,6 +70,12 @@ jobs:
       - name: Salvar logs da aplicação
         run: docker logs cicd-container > logs.txt
 
+      - name: Armazenar artefato de Log
+        uses: actions/upload-artifact@v4
+        with:
+          name: application-logs
+          path: logs.txt
+
       - name: Testar aplicação rodando no container
         run: |
           sleep 10
@@ -91,8 +97,8 @@ jobs:
       - name: Exibir URL pública do ngrok
         run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
-      - name: Esperar 40 segundos antes de baixar o artefato
-        run: sleep 40
+      - name: Esperar 20 segundos antes de baixar o artefato
+        run: sleep 20
 
       - name: Upload logs como artifact
         uses: actions/upload-artifact@v4
