@@ -74,7 +74,7 @@ jobs:
 
   ngrok:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: ngrok
     steps:
       - name: Expor aplicação com ngrok
         run: |
