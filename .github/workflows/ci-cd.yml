@@ -69,6 +69,7 @@ jobs:
 
   teste-aplicacao-rodando-container-ngrok:
     runs-on: ubuntu-latest
+    needs: teste-aplicacao-rodando-container-ngrok
     steps:
       - name: Expor aplicação com ngrok
         run: |
