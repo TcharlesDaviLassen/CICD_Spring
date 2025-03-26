@@ -34,12 +34,6 @@ jobs:
           name: app-jar
           path: target/*.jar
 
-      - name: Upload logs como artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: container-logs
-          path: ./logs.txt
-
   build-docker:
     runs-on: ubuntu-latest
     needs: build-and-test
@@ -73,12 +67,17 @@ jobs:
       - name: Salvar logs da aplicação
         run: docker logs cicd-container > logs.txt
 
+#      - name: Upload logs como artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: container-logs
+#          path: ./logs.txt
 
       - name: Upload logs como artifact
         uses: actions/download-artifact@v4
         with:
           name: application-logs
-          path: logs.txt
+          path: ./logs.txt
 
       - name: Testar aplicação rodando no container
         run: |
