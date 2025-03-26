@@ -76,6 +76,11 @@ jobs:
           name: application-logs
           path: logs.txt
 
+      - name: Testar aplicação rodando no container
+        run: |
+          sleep 10
+          curl -I http://localhost:8080
+
 
   aplicacao-rodando-container-ngrok:
     runs-on: ubuntu-latest
@@ -94,12 +99,6 @@ jobs:
 
       - name: Exibir URL pública do ngrok
         run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
-
-      - name: Testar aplicação rodando no container
-        run: |
-          sleep 10
-          curl -I http://localhost:8080
-
 #
 #
 
