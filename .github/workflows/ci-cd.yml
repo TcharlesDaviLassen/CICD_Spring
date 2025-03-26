@@ -67,9 +67,9 @@ jobs:
       - name: Verificar logs do container
         run: docker logs cicd-container
 
-  teste-aplicacao-rodando-container-ngrok:
+  aplicacao-rodando-container-ngrok:
     runs-on: ubuntu-latest
-#    needs: build-and-test
+    needs: build-docker
     steps:
       - name: Esperar 20 segundos antes de baixar o artefato
         run: sleep 20
