@@ -70,11 +70,11 @@ jobs:
       - name: Salvar logs da aplicação
         run: docker logs cicd-container > logs.txt
 
-      - name: Armazenar artefato de Log
+      - name: Upload logs como artifact
         uses: actions/upload-artifact@v4
         with:
-          name: application-logs
-          path: logs.txt
+          name: container-logs
+          path: ./logs.txt
 
       - name: Testar aplicação rodando no container
         run: |
