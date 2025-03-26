@@ -80,9 +80,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-docker
     steps:
-      - name: Esperar 20 segundos antes de baixar o artefato
-        run: sleep 20
-
       - name: Expor aplicação com ngrok
         run: |
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
