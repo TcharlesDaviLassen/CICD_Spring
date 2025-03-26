@@ -69,7 +69,7 @@ jobs:
 
   teste-aplicacao-rodando-container-ngrok:
     runs-on: ubuntu-latest
-    needs: build-and-test
+#    needs: build-and-test
     steps:
       - name: Esperar 20 segundos antes de baixar o artefato
         run: sleep 20
