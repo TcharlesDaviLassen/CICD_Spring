@@ -41,8 +41,8 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Esperar 10 segundos antes de baixar o artefato
-        run: sleep 10
+#      - name: Esperar 10 segundos antes de baixar o artefato
+#        run: sleep 10
 
       - name: Baixar artefato
         uses: actions/download-artifact@v4
@@ -92,7 +92,7 @@ jobs:
         run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
       - name: Upload logs como artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: application-logs
           path: logs.txt
