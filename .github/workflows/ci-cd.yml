@@ -45,9 +45,6 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Esperar 10 segundos para o ngrok configurar
-        run: sleep 10
-
       - name: Baixar artefato gerado no build
         uses: actions/download-artifact@v4
         with:
@@ -65,22 +62,13 @@ jobs:
           docker run -d -p 8080:8080 --name cicd-container cicd:${{ github.sha }}
 
       - name: Aguardar inicialização do container
-        run: sleep 10
+        run: sleep 20
 
       - name: Verificar se o container está rodando
         run: docker ps -a
 
-      - name: Verificar containers em execução
-        run: docker ps -a
-
       - name: Verificar logs do container
-        run: docker logs cicd-container
-
-      - name: Salvar logs da aplicação
-        run: docker logs cicd-container > logs.txt
-
-      - name: Verificar conteúdo do log
-        run: cat logs.txt || echo "Nenhum log foi gerado." >> logs.txt
+        run: docker logs cicd-container | tee logs.txt
 
       - name: Upload logs como artifact
         uses: actions/upload-artifact@v4
@@ -90,8 +78,7 @@ jobs:
 
       - name: Testar aplicação rodando no container
         run: |
-          sleep 10
-          curl -I http://localhost:8080
+          curl -I http://localhost:8080 || (echo "Aplicação não está respondendo" && exit 1)
 
   expose-ngrok:
     runs-on: ubuntu-latest
@@ -103,30 +90,21 @@ jobs:
           echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
           sudo apt update && sudo apt install ngrok -y
 
-      - name: configurar ngrok
+      - name: Configurar ngrok
         run: |
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          nohup ngrok http 8080 > ngrok.log 2>&1 &
-
-      - name: Verificar instalação do ngrok
-        run: ngrok version || (echo "Ngrok não instalado corretamente" && exit 1)
-
-      - name: Testar autenticação do ngrok
-        run: ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }} || (echo "Token inválido" && exit 1)
-
-      - name: Finalizar sessões antigas do ngrok
-        run: pkill -f ngrok || echo "Nenhuma sessão ativa para matar."
 
       - name: Iniciar ngrok
-        run: nohup ngrok http -region=us 8080 > ngrok.log 2>&1 &
+        run: nohup ngrok http 8080 > ngrok.log 2>&1 &
+
+      - name: Aguardar ngrok iniciar
+        run: sleep 20
 
       - name: Exibir URL pública do ngrok
-        run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
+        run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url' || (echo "Erro ao obter URL do ngrok" && exit 1)
 
       - name: Verificar se a aplicação está rodando
         run: curl -I http://localhost:8080 || (echo "Aplicação não está respondendo" && exit 1)
-
-
 
 #
 #
