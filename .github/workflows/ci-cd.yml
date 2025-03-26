@@ -120,11 +120,11 @@ jobs:
       - name: Iniciar ngrok
         run: nohup ngrok http -region=us 8080 > ngrok.log 2>&1 &
 
-      - name: Verificar se a aplicação está rodando
-        run: curl -I http://localhost:8080 || (echo "Aplicação não está respondendo" && exit 1)
-
       - name: Exibir URL pública do ngrok
         run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
+
+      - name: Verificar se a aplicação está rodando
+        run: curl -I http://localhost:8080 || (echo "Aplicação não está respondendo" && exit 1)
 
 
 
