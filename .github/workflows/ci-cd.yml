@@ -89,7 +89,7 @@ jobs:
         run: docker logs cicd-container > logs.txt
 
       - name: Upload logs como artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: application-logs
           path: logs.txt
