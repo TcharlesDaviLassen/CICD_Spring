@@ -64,6 +64,12 @@ jobs:
         run: |
           docker run -d -p 8080:8080 --name cicd-container cicd:${{ github.sha }}
 
+      - name: Aguardar inicialização do container
+        run: sleep 10
+
+      - name: Verificar se o container está rodando
+        run: docker ps -a
+
       - name: Verificar containers em execução
         run: docker ps -a
 
@@ -72,6 +78,9 @@ jobs:
 
       - name: Salvar logs da aplicação
         run: docker logs cicd-container > logs.txt
+
+      - name: Verificar conteúdo do log
+        run: cat logs.txt || echo "Nenhum log foi gerado." >> logs.txt
 
       - name: Upload logs como artifact
         uses: actions/upload-artifact@v4
