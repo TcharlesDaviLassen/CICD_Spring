@@ -41,8 +41,8 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-#      - name: Esperar 10 segundos antes de baixar o artefato
-#        run: sleep 10
+      - name: Esperar 20 segundos antes de baixar o artefato
+        run: sleep 20
 
       - name: Baixar artefato
         uses: actions/download-artifact@v4
