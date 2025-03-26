@@ -72,6 +72,10 @@ jobs:
       #     needs: build-and-test
       #     steps:
 
+  ngrok:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    steps:
       - name: Expor aplicação com ngrok
         run: |
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
@@ -83,11 +87,6 @@ jobs:
       - name: Exibir URL pública do ngrok
         run: curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
-      - name: Testar aplicação rodando no container
-        run: |
-         sleep 10
-         curl -I http://localhost:8080
-
       - name: Salvar logs da aplicação
         run: docker logs cicd-container > logs.txt
 
@@ -97,6 +96,10 @@ jobs:
           name: application-logs
           path: logs.txt
 
+      - name: Testar aplicação rodando no container
+        run: |
+          sleep 10
+          curl -I http://localhost:8080
 
 #
 #
