@@ -27,6 +27,11 @@ jobs:
           java-version: "17"
           cache: "maven"
 
+      - name: Construir e rodar testes
+        run: |
+          chmod +x mvnw
+          ./mvnw clean package
+
       - name: Listar arquivos gerados
         run: ls -l target/
 
