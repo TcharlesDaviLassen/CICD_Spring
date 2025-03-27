@@ -42,10 +42,10 @@ jobs:
   # Deploy de desenvolvimento para fazer a validação de pode ir para a branch de desenvolvimento com a permissão do revisor
   deploy-development:
     runs-on: ubunto-latest
+    needs: build-and-test
     environment:
       name: development
-      url: https://github.com/TcharlesDaviLassen/CICD_Spring
-    needs: build-and-test
+#      url: https://github.com/TcharlesDaviLassen/CICD_Spring
 
   build-docker:
     runs-on: ubuntu-latest
