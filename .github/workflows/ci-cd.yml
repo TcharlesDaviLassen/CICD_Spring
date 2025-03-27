@@ -50,9 +50,6 @@ jobs:
   build-docker:
     runs-on: ubuntu-latest
     needs: deploy-development
-    environment:
-      name: development
-      url: https://github.com/TcharlesDaviLassen/CICD_Spring
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4

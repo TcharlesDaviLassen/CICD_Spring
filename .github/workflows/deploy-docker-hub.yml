@@ -52,6 +52,9 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
+      - name: Aguardar inicialização do container
+        run: sleep 10
+
       - name: Baixar artefato
         uses: actions/download-artifact@v4
         with:
